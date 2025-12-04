@@ -8,6 +8,9 @@ app.use(cors())
 app.use(express.json())
 
 //Rutas
+const authRoutes = require('./routes/auth.routes')
+app.use('/auth', authRoutes)
+
 app.get('/', (req, res) => {
     res.send('API To-Do Funcionando')
 })
