@@ -1,3 +1,52 @@
-node_modules
-.env
-package-lock.json
+# =========================
+# 🟦 GENERALES
+# =========================
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+*.log
+
+# =========================
+# 🟧 SISTEMA OPERATIVO
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 🟩 EDITORES
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# 🟪 BACKEND
+# =========================
+backend/node_modules/
+backend/.env
+
+
+# =========================
+# 🟦 FRONTEND
+# =========================
+frontend/node_modules/
+frontend/www/
+frontend/dist/
+frontend/build/
+
+# =========================
+# 🟥 Capacitor
+# =========================
+frontend/android/
+frontend/ios/
+*.keystore
+*.jks
+
+# =========================
+# 🟨 ARCHIVOS TEMPORALES
+# =========================
+*.tmp
+*.temp
+*.cache
