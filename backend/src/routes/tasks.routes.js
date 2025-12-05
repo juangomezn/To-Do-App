@@ -6,7 +6,7 @@ const { verifyToken } = require('../middlewares/auth.middleware')
 
 router.get('/', verifyToken, taskController.getTasks)
 router.post('/', verifyToken, taskController.createTask)
-router.put('/:id', verifyToken, taskController.updateTasks)
+router.put('/:id', verifyToken, taskController.updateTask)
 router.delete('/:id', verifyToken, taskController.deleteTask)
 
 module.exports = router 
