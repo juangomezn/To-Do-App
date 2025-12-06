@@ -1,8 +1,6 @@
 const Task = require('../models/task.model');
 
 module.exports = {
-
-    // Obtener tareas del usuario
     async getTasks(req, res) {
         try {
             const userId = req.user.id;
@@ -15,7 +13,6 @@ module.exports = {
         }
     },
 
-    // Crear tarea
     async createTask(req, res) {
         try {
             const userId = req.user.id;
@@ -38,24 +35,19 @@ module.exports = {
         }
     },
 
-    // Actualizar tarea
     async updateTask(req, res) {
         try {
             const userId = req.user.id;
             const taskId = req.params.id;
-            const fields = req.body; // Campos a actualizar
+            const fields = req.body;
 
-            // 1. Validar que se envíen campos
             if (!fields || Object.keys(fields).length === 0) {
                 return res.status(400).json({ message: 'Debe proporcionar al menos un campo para actualizar.' });
             }
 
-            // 2. Intentar actualizar (la validación de propiedad está en el modelo)
             const updated = await Task.updateTask(taskId, userId, fields);
 
-            // 3. Revisar el resultado de la actualización
             if (!updated) {
-                // Si affectedRows fue 0, la tarea no existe o no es del usuario
                 return res.status(404).json({ message: 'Tarea no encontrada o no te pertenece' });
             }
 
@@ -67,13 +59,11 @@ module.exports = {
         }
     },
 
-    // Eliminar tarea
     async deleteTask(req, res) {
         try {
             const userId = req.user.id;
             const taskId = req.params.id;
 
-            // Verificar si la tarea pertenece al usuario
             const task = await Task.getTaskById(taskId, userId);
 
             if (!task) {

@@ -17,11 +17,15 @@
       <ion-input type="password" [(ngModel)]="password"></ion-input>
     </ion-item>
 
-    <ion-button expand="block" (click)="register()">Registrarme</ion-button>
+    <ion-button expand="block" shape="round" (click)="register()">
+      Registrarme
+    </ion-button>
 
     <p class="register-text">
       ¿Ya tienes cuenta?
-      <a routerLink="/login">Inicia sesión</a>
+      <ion-button routerLink="/login" fill="clear" size="small">
+        Inicia sesión
+      </ion-button>
     </p>
   </div>
 </ion-content>

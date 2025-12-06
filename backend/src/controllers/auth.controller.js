@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
 
 module.exports = {
-    //Registro de Usuarios
     async register(req, res){
         try {
             const { name, email, password } = req.body
@@ -16,16 +15,13 @@ module.exports = {
                 return res.status(400).json({message:"La contraseña debe tener al menos 5 caracteres"})
             }
 
-            //Verificar si el email ya existe
             const existingUser = await User.findUserByEmail(email)
             if(existingUser){
                 return res.status(400).json({message:"El email ya esta registrado"})
             }
 
-            //Hashear contraseña
             const hashedPassword = await bcrypt.hash(password, 10)
 
-            //Crear usuario
             const userId = await User.createUser(name, email, hashedPassword)
 
             return res.status(201).json({
@@ -39,7 +35,6 @@ module.exports = {
         }
     },
 
-    //Login de usuario
     async login(req, res) {
         try {
 
@@ -55,14 +50,12 @@ module.exports = {
                 return res.status(400).json({ message: "Credenciales incorrectas" })
             }
 
-            //Validar contraseña
             const isMatch = await bcrypt.compare(password, user.password)
 
             if (!isMatch) {
                 return res.status(400).json({ message: "Credenciales incorrectas" })
             }
 
-            //Generar JWT
             const token = jwt.sign(
                 { id: user.id },
                 process.env.JWT_SECRET,

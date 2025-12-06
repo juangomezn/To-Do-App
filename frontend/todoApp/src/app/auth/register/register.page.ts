@@ -1,44 +1,40 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { Router, RouterLink } from '@angular/router';     
 import { AuthService } from '../../services/auth.service';
-import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    RouterLink        
+  ]
 })
 export class RegisterPage {
-  name = '';
-  email = '';
-  password = '';
+  name: string = '';
+  email: string = '';
+  password: string = '';
 
   constructor(
     private auth: AuthService,
-    private router: Router,
-    private alertCtrl: AlertController
+    private router: Router
   ) {}
 
-  async present(message: string, header = 'Aviso') {
-    const a = await this.alertCtrl.create({ header, message, buttons: ['OK'] });
-    await a.present();
+  register() {
+    this.auth.register(this.name, this.email, this.password).subscribe({
+      next: () => this.router.navigate(['/login']),
+      error: (err) => console.error('Registration error:', err)
+    });
   }
 
-  register() {
-    if (!this.name || !this.email || !this.password) {
-      this.present('Completa todos los campos');
-      return;
-    }
-
-    this.auth.register(this.name, this.email, this.password).subscribe({
-      next: (res: any) => {
-        this.present('Usuario registrado correctamente', 'Éxito');
-        this.router.navigate(['/login']);
-      },
-      error: (err) => {
-        console.error(err);
-        this.present(err.error?.message || 'Error al registrar');
-      }
-    });
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 }

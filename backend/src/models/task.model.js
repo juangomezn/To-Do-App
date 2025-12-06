@@ -1,7 +1,6 @@
 const db = require('../config/db.js')
 
 const Task = {
-    //Crear Tarea
     async createTask(userId, title, description) {
         const [result] = await db.query(
             'INSERT INTO tasks (userId, title, description) VALUES (?, ?, ?)',
@@ -10,7 +9,6 @@ const Task = {
         return result.insertId
     },
 
-    //Obtener tarea del Usuario
     async getTasksByUser(userId) {
         const [rows] = await db.query(
             'SELECT * FROM tasks WHERE userId = ? ORDER BY createdAt DESC',
@@ -19,7 +17,6 @@ const Task = {
         return rows
     },
 
-    // Obtener una tarea por id y usuario (validación)
     async getTaskById(id, userId) {
         const [rows] = await db.query(
             'SELECT * FROM tasks WHERE id = ? AND userId = ?',
@@ -28,7 +25,6 @@ const Task = {
         return rows
     },
 
-    // Actualizar tarea
     async updateTask(id, userId, fields) {
 
         if (!fields || Object.keys(fields).length === 0) {
@@ -63,7 +59,6 @@ const Task = {
 
     }, 
 
-    //Eliminar tarea
     async deleteTask(id, userId) {
         const [result] = await db.query(
             'DELETE FROM tasks WHERE id = ? AND userId = ?',
